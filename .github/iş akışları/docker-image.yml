@@ -1,0 +1,125 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+- ad: Eski Sorunları Kapat
+  kullanımlar: action/stale@v7.0.0
+  ile:
+    # Depo için belirteç. `{{ secrets.GITHUB_TOKEN }}` kullanılarak iletilebilir.
+    repo-token: # isteğe bağlı, varsayılan değer ${{ github.token }}
+    # Konuyu etiketlerken konu üzerine gönderilecek mesaj. Hiçbiri sağlanmazsa, sorunları eski olarak işaretlemez.
+    bayat sorun mesajı: # isteğe bağlı
+    # Etiketleme sırasında çekme isteği üzerine gönderilecek mesaj. Hiçbiri sağlanmazsa, çekme isteklerini eski olarak işaretlemez.
+    bayat-p-message: # isteğe bağlı
+    # Konuyu kapatırken yayınlanacak mesaj. Hiçbiri sağlanmazsa, bir konuyu kapatırken yorum yapmaz.
+    kapanış mesajı: # isteğe bağlı
+    # Çekme isteğini kapatırken gönderilecek mesaj. Hiçbiri sağlanmazsa, çekme isteklerini kapatırken yorum yapılmaz.
+    yakın mesaj: # isteğe bağlı
+    # Bir sorunun veya çekme isteğinin eski olarak işaretlenmesinden önceki gün sayısı. Sorunları veya çekme isteklerini hiçbir zaman otomatik olarak eskimiş olarak işaretlememek için -1 olarak ayarlayın.
+    bayatlamadan önceki gün: # isteğe bağlı, varsayılan 60'tır
+    # Bir sayının eski olarak işaretlenmesinden önce olabileceği gün sayısı. Sorunları hiçbir zaman otomatik olarak eski olarak işaretlememek için -1 olarak ayarlayın. Yalnızca sorunlarla ilgili "bayattan önceki günler" seçeneğini geçersiz kılın.
+    gün-öncesi-sayı-bayat: # isteğe bağlı
+    # Bir çekme isteğinin eski olarak işaretlenmesinden önceki gün sayısı. Çekme isteklerini hiçbir zaman otomatik olarak eski olarak işaretlememek için -1 olarak ayarlayın. Yalnızca çekme istekleriyle ilgili olarak "bayattan önceki günler" seçeneğini geçersiz kılın.
+    bayatlamadan önceki gün sayısı: # isteğe bağlı
+    # Eski olarak işaretlendikten sonra bir sorunu veya çekme isteğini kapatmak için beklenecek gün sayısı. Eski sorunları veya çekme isteklerini hiçbir zaman kapatmamak için -1 olarak ayarlayın.
+    gün-önce-kapanış: # isteğe bağlı, varsayılan 7'dir
+    # Eski olarak işaretlendikten sonra bir sorunu kapatmak için beklenecek gün sayısı. Eski sorunları asla kapatmamak için -1 olarak ayarlayın. Yalnızca sorunlarla ilgili "kapanıştan önceki günler" seçeneğini geçersiz kılın.
+    gün-bece-issue-close: # isteğe bağlı
+    # Eski olarak işaretlendikten sonra bir çekme isteğinin kapatılması için beklenecek gün sayısı. Eski çekme isteklerini asla kapatmamak için -1 olarak ayarlayın. Yalnızca çekme istekleriyle ilgili olarak "kapanmadan önceki günler" seçeneğini geçersiz kılın.
+    gün-öncesi-kapanış: # isteğe bağlı
+    # Bir sorun eskidiğinde uygulanacak etiket.
+    bayat-sorun-etiketi: # isteğe bağlı, varsayılan değer Eskidir
+    # Bir sorun kapatıldığında uygulanacak etiket.
+    kapanış etiketi: # isteğe bağlı
+    # Bir sayının eski olarak işaretlenmeyeceği anlamına gelen etiketler. Birden çok etiketi virgülle ayırın (ör. "etiket1,etiket2").
+    muaf-sorun-etiketleri: # isteğe bağlı, varsayılan
+    # Bir konuyu kapatırken kullanma nedeni.
+    kapatma-sorunu-nedeni: # isteğe bağlı, varsayılan planlanmamış
+    # Bir çekme isteği eski olduğunda uygulanacak etiket.
+    bayat-pr-label: # isteğe bağlı, varsayılan Eskidir
+    # Bir çekme isteği kapatıldığında uygulanacak etiket.
+    yakın-p-etiketi: # isteğe bağlı
+    # Bir çekme talebinin eski olarak işaretlenmeyeceği anlamına gelen etiketler. Birden çok etiketi virgülle ayırın (ör. "etiket1,etiket2").
+    muaf-p-etiketleri: # isteğe bağlı, varsayılan
+    # Bir sorun veya çekme isteği anlamına gelen kilometre taşları, eski olarak işaretlenmekten muaftır. Birden çok kilometre taşını virgülle ayırın (ör. "dönüm noktası1, kilometre taşı2").
+    muaf kilometre taşları: # isteğe bağlı, varsayılan
+    # Bir sorunun eski olarak işaretlenmekten muaf olduğu anlamına gelen kilometre taşları. Birden çok kilometre taşını virgülle ayırın (ör. "dönüm noktası1, kilometre taşı2"). Yalnızca sorunlarla ilgili "muaf kilometre taşları" seçeneğini geçersiz kılın.
+    muaf-sorun-kilometre taşları: # isteğe bağlı, varsayılan
+    # Bir çekme isteğinin eski olarak işaretlenmekten muaf olduğu anlamına gelen kilometre taşları. Birden çok kilometre taşını virgülle ayırın (ör. "dönüm noktası1, kilometre taşı2"). Yalnızca çekme istekleriyle ilgili olarak "muaf kilometre taşları" seçeneğini geçersiz kılın.
+    muaf-p-kilometre taşları: # isteğe bağlı, varsayılan
+    # Aşamaları olan tüm sorunları ve çekme isteklerini eski olarak işaretlenmekten muaf tutun. Varsayılan olarak false.
+    muaf tüm kilometre taşları: # isteğe bağlı, varsayılan değer yanlış
+    # Aşamaları olan tüm sorunları eski olarak işaretlenmekten muaf tutun. Yalnızca sorunlarla ilgili olarak "tüm kilometre taşlarından muaf" seçeneğini geçersiz kılın.
+    muaf-all-issue-kilometre taşları: # isteğe bağlı, varsayılan
+    # Kilometre taşlarına sahip tüm çekme isteklerini eski olarak işaretlenmekten muaf tutun. Yalnızca çekme istekleriyle ilgili olarak "tüm kilometre taşlarından muaf" seçeneğini geçersiz kılın.
+    muaf-all-p-milestones: # isteğe bağlı, varsayılan
+    # Yalnızca tüm bu etiketlerle ilgili sorunlar veya çekme istekleri eskiyse kontrol edilir. Varsayılan olarak `` (devre dışı) şeklindedir ve virgülle ayrılmış bir etiket listesi olabilir.
+    sadece-etiketler: # isteğe bağlı, varsayılan
+    # Eskiyse, yalnızca bu etiketlerden en az birine sahip sorunlar veya çekme istekleri kontrol edilir. Varsayılan olarak `` (devre dışı) şeklindedir ve virgülle ayrılmış bir etiket listesi olabilir.
+    etiketlerden herhangi biri: # isteğe bağlı, varsayılan
+    # Yalnızca bu etiketlerden en az biriyle ilgili sorunlar eskiyse kontrol edilir. Varsayılan olarak `` (devre dışı) şeklindedir ve virgülle ayrılmış bir etiket listesi olabilir. Yalnızca sorunlarla ilgili "etiketlerden herhangi biri" seçeneğini geçersiz kılın.
+    sorun etiketleri: # isteğe bağlı, varsayılan
+    # Yalnızca bu etiketlerden en az birine sahip çekme istekleri eskiyse kontrol edilir. Varsayılan olarak `` (devre dışı) şeklindedir ve virgülle ayrılmış bir etiket listesi olabilir. Yalnızca çekme istekleriyle ilgili olarak "etiketlerden herhangi biri" seçeneğini geçersiz kılın.
+    pr-etiketlerinden herhangi biri: # isteğe bağlı, varsayılan
+    # Yalnızca tüm bu etiketlerle ilgili sorunlar eskiyse kontrol edilir. Varsayılan olarak "[]" (devre dışı) şeklindedir ve virgülle ayrılmış bir etiket listesi olabilir. Yalnızca sorunlarla ilgili olarak "yalnızca etiketler" seçeneğini geçersiz kılın.
+    only-issue-labels: # isteğe bağlı, varsayılan
+    # Yalnızca tüm bu etiketlere sahip çekme istekleri eskiyse kontrol edilir. Varsayılan olarak "[]" (devre dışı) şeklindedir ve virgülle ayrılmış bir etiket listesi olabilir. Yalnızca çekme istekleriyle ilgili olarak "yalnızca etiketler" seçeneğini geçersiz kıl.
+    only-p-labels: # isteğe bağlı, varsayılan
+    # Hız sınırlamasını kontrol etmek için kullanılan çalıştırma başına maksimum işlem sayısı (GitHub API CRUD ile ilgili).
+    çalıştırma başına işlem: # isteğe bağlı, varsayılan 30'dur
+    # Sorunlardan eski etiketleri kaldırın ve güncellendiklerinde veya yorumlandıklarında istekleri çekin.
+    güncellendiğinde bayat kaldır: # isteğe bağlı, varsayılan doğrudur
+    # Eski etiketleri güncellendiklerinde veya yorumlandıklarında sorunlardan kaldırın. Yalnızca sorunlarla ilgili olarak "güncellendiğinde eskiyi kaldır" seçeneğini geçersiz kılın.
+    kaldır-sorun-eski-zaman-güncellendi: # isteğe bağlı, varsayılan
+    # Eski etiketleri güncellendiklerinde veya yorumlandıklarında çekme isteklerinden kaldırın. Yalnızca çekme istekleriyle ilgili "güncellendiğinde eskiyi kaldır" seçeneğini geçersiz kıl.
+    kaldır-p-stale-zaman-güncellendi: # isteğe bağlı, varsayılan
+    # Canlı sorunlar üzerinde fiilen herhangi bir işlem gerçekleştirmeden işlemciyi hata ayıklama modunda çalıştırın.
+    yalnızca hata ayıklama: # isteğe bağlı, varsayılan değer yanlıştır
+    # Sorun alma veya istekleri çekme sırası. Varsayılan değer, azalan false'tur.
+    artan: # isteğe bağlı, varsayılan değer yanlıştır
+    # Eski bir pull request'i kapattıktan sonra git şubesini silin.
+    sil-branch: # isteğe bağlı, varsayılan değer yanlıştır
+    # Kendisinden önce oluşturulan sorun/çekme isteğinde eski eylemi atlamak için kullanılan tarih (ISO 8601 veya RFC 2822).
+    başlangıç ​​tarihi: # isteğe bağlı, varsayılan
+    # Bir sorunu veya çekme isteğini eski olarak işaretlenmekten muaf tutan vekiller. Birden çok atanan kişiyi virgülle ayırın (ör. "kullanıcı1,kullanıcı2").
+    muaf atananlar: # isteğe bağlı, varsayılan
+    # Bir sorunu eski olarak işaretlenmekten muaf tutan vekiller. Birden çok atanan kişiyi virgülle ayırın (ör. "kullanıcı1,kullanıcı2"). Yalnızca sorunlarla ilgili olarak "muaf-vekiller" seçeneğini geçersiz kılın.
+    muaf-verilen-atananlar: # isteğe bağlı, varsayılan
+    # Bir çekme isteğini eski olarak işaretlenmekten muaf tutan atananlar. Birden çok atanan kişiyi virgülle ayırın (ör. "kullanıcı1,kullanıcı2"). Yalnızca çekme istekleriyle ilgili olarak "muaf-vekiller" seçeneğini geçersiz kılın.
+    muaf-pro-atananlar: # isteğe bağlı, varsayılan
+    # Atananlarla tüm sorunları ve çekme isteklerini eski olarak işaretlenmekten muaf tutun. Varsayılan olarak false.
+    muaf tüm atananlar: # isteğe bağlı, varsayılan değer yanlış
+    # Atananlarla ilgili tüm sorunları eski olarak işaretlenmekten muaf tutun. Yalnızca sorunlarla ilgili olarak "tüm atananları muaf tut" seçeneğini geçersiz kılın.
+    muaf-all-issue-temsilcileri: # isteğe bağlı, varsayılan
+    # Atananlarla yapılan tüm çekme isteklerini eski olarak işaretlenmekten muaf tutun. Yalnızca çekme istekleriyle ilgili olarak "tüm atananları muaf tut" seçeneğini geçersiz kılın.
+    muaf-all-p-atananlar: # isteğe bağlı, varsayılan
+    # Taslak çekme isteklerini eski olarak işaretlenmekten muaf tut. Varsayılan olarak false.
+    muaf-taslak-pr: # isteğe bağlı, varsayılan değer yanlıştır
+    # Sonunda eski iş akışıyla ilgili bazı istatistikleri görüntüleyin (yalnızca günlükler etkinleştirildiğinde).
+    etkinleştirme istatistikleri: # isteğe bağlı, varsayılan doğrudur
+    # Eski bir sorun veya çekme isteği etkinlik aldığında ve eski sorun etiketi veya eski pr etiketi kaldırıldığında eklenecek virgülle ayrılmış bir etiket listesi.
+    etiketleri kaldırıldığında eklenecek etiketler: # isteğe bağlı, varsayılan
+    # Eski bir sorun veya çekme isteği etkinlik aldığında ve eski sorun etiketi veya eski pr etiketi kaldırıldığında kaldırılacak virgülle ayrılmış bir etiket listesi.
+    etiketler-to-remove-When-unstale: # isteğe bağlı, varsayılan
+    # Herhangi bir güncelleme (güncelleme/yorum), sorunlar ve çekme istekleri üzerindeki eski boşta kalma süresini sıfırlayabilir.
+    yoksay güncellemeleri: # isteğe bağlı, varsayılan değer yanlış
+    # Herhangi bir güncelleme (güncelleme/yorum) konulardaki eski boşta kalma süresini sıfırlayabilir. Yalnızca sorunlarla ilgili "güncellemeleri yoksay" seçeneğini geçersiz kılın.
+    yoksay-sorun-güncellemeleri: # isteğe bağlı, varsayılan
+    # Herhangi bir güncelleme (güncelleme/yorum) çekme isteklerindeki eski boşta kalma süresini sıfırlayabilir. Yalnızca çekme istekleriyle ilgili "güncellemeleri yoksay" seçeneğini geçersiz kılın.
+    yoksay-p-güncellemeleri: # isteğe bağlı, varsayılan
+    # Yalnızca atanan kişiyle yapılan sorunlar veya çekme istekleri otomatik olarak eski olarak işaretlenir.
+    yalnızca-atananları içerir: # isteğe bağlı, varsayılan değer yanlıştır
