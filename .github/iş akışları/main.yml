@@ -1,0 +1,24 @@
+Semaerdem3536-patch-1
+- ad: Node.js ortamını kurun
+  kullanımlar: action/setup-node@v3.6.0
+  ile:
+    # npmrc'de her zaman-auth'u ayarlayın.
+    Always-auth: # isteğe bağlı, varsayılan değer yanlıştır
+    # Sürüm Kullanılacak sürümün özellikleri. Örnekler: 12.x, 10.15.1, >=10.15.0.
+    düğüm sürümü: # isteğe bağlı
+    # Kullanılacak sürümün sürüm Spec'ini içeren dosya. Örnekler: .nvmrc, .node-version, .tool-versions.
+    düğüm sürümü dosyası: # isteğe bağlı
+    # Düğümün kullanması için hedef mimari. Örnekler: x86, x64. Varsayılan olarak sistem mimarisini kullanır.
+    mimari: # isteğe bağlı
+    # Eylemin, sürüm özelliklerini karşılayan mevcut en son sürümü kontrol etmesini istiyorsanız bu seçeneği ayarlayın.
+    en son kontrol: # isteğe bağlı
+    # Kimlik doğrulama için ayarlanacak isteğe bağlı kayıt defteri. Kayıt defterini proje düzeyinde bir .npmrc ve .yarnrc dosyasında ayarlayacak ve env.NODE_AUTH_TOKEN'den okumak için auth'u ayarlayacaktır.
+    kayıt url'si: # isteğe bağlı
+    # Kapsamlı kayıt defterlerine karşı kimlik doğrulama için isteğe bağlı kapsam. GitHub Paketleri kayıt defterini (https://npm.pkg.github.com/) kullanırken havuz sahibine geri dönecektir.
+    kapsam: # isteğe bağlı
+    # Düğüm sürümlerinden düğüm dağıtımlarını çekmek için kullanılır. Bir varsayılan olduğu için, bu genellikle kullanıcı tarafından sağlanmaz. Bu eylemi github.com'da çalıştırırken, varsayılan değer yeterlidir. GHES üzerinde çalışırken, hız sınırlaması yaşıyorsanız github.com için kişisel bir erişim belirteci iletebilirsiniz.
+    belirteç: # isteğe bağlı, varsayılan ${{ github.server_url == 'https://github.com' && github.token || '' }}
+    # Varsayılan dizinde önbelleğe alma için bir paket yöneticisi belirtmek için kullanılır. Desteklenen değerler: npm, yarn, pnpm.
+    önbellek: # isteğe bağlı
+    # Bir bağımlılık dosyasının yolunu belirtmek için kullanılır: package-lock.json, yarn.lock, vb. Birden çok bağımlılığı önbelleğe almak için joker karakterleri veya dosya adları listesini destekler.
+    önbellek bağımlılığı yolu: # isteğe bağlı
